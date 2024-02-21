@@ -1,12 +1,18 @@
 import { createStore } from "redux";
 
-const initialState = {
+const initialStateAccount = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
 };
 
-const reducer = (state = initialState, action) => {
+const initialStateCustomer = {
+  fullName: "",
+  nationalID: "",
+  createdAt: "",
+};
+
+const reducer = (state = initialStateAccount, action) => {
   switch (action.type) {
     case "account/deposit":
       return { ...state, balance: state.balance + action.payload };
@@ -44,6 +50,7 @@ const store = createStore(reducer);
 // });
 // store.dispatch({type:"account/payLoan"});
 
+// action function for acconut
 function deposit(amount) {
   return { type: "account/deposit", payload: amount };
 }
@@ -68,9 +75,23 @@ function payLoan() {
   };
 }
 
+//action function for customer
+
+function createCustomer(fullName, nationalID) {
+  return {
+    type: "customer/createCustomer",
+    payload: {
+      fullName,
+      nationalID,
+      createdAt: new Date().toISOString(),
+    },
+  };
+}
+
+
 store.dispatch(deposit(500));
 store.dispatch(withdraw(200));
 store.dispatch(requestLoan(1000, "Buy a cheap car"));
-store.dispatch(payLoan())
+store.dispatch(payLoan());
 
 console.log(store.getState());

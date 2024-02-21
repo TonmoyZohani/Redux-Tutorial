@@ -12,7 +12,7 @@ const initialStateCustomer = {
   createdAt: "",
 };
 
-const reducer = (state = initialStateAccount, action) => {
+const accountReducer = (state = initialStateAccount, action) => {
   switch (action.type) {
     case "account/deposit":
       return { ...state, balance: state.balance + action.payload };
@@ -37,6 +37,20 @@ const reducer = (state = initialStateAccount, action) => {
       };
     default:
       return state;
+  }
+};
+
+const customerReducer = (state = initialStateCustomer, action) => {
+  switch (action.type) {
+    case "customer/createCustomer":
+      return {
+        ...state,
+        fullName: action.payload.fullName,
+        nationalID: action.payload.nationalID,
+        createdAt: action.payload.createdAt,
+      };
+    case "customer/updateName":
+      return { ...state, fullName: action.payload.fullName };
   }
 };
 
@@ -88,6 +102,12 @@ function createCustomer(fullName, nationalID) {
   };
 }
 
+function updateName(fullName) {
+  return {
+    type: "customer/updateName",
+    payload: fullName,
+  };
+}
 
 store.dispatch(deposit(500));
 store.dispatch(withdraw(200));

@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import store from "./store";
 import { deposit } from "./features/accounts/accountSlice";
+import { Provider } from "react-redux";
 
 store.dispatch({ type: "account/deposit", payload: 500 });
 store.dispatch(deposit(200));
@@ -14,7 +15,9 @@ console.log(store.getState());
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

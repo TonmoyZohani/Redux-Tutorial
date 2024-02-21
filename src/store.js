@@ -1,3 +1,5 @@
+import { createStore } from "redux";
+
 const initialState = {
   balance: 0,
   loan: 0,
@@ -23,6 +25,12 @@ const reducer = (state = initialState, action) => {
         balance: state.balance - state.loan,
       };
     default:
-        return state
+      return state;
   }
 };
+
+const store = createStore(reducer);
+
+store.dispatch({type:"account/deposit",payload:500});
+
+console.log('Hello World');

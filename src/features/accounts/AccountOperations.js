@@ -40,7 +40,9 @@ function AccountOperations() {
     setLoanPurpose("");
   }
 
-  function handlePayLoan() {}
+  function handlePayLoan() {
+    dispatch(payLoan());
+  }
 
   return (
     <div>
@@ -93,10 +95,16 @@ function AccountOperations() {
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>
 
-        <div>
-          <span>Pay back ${account?.balance} {account?.loanPurpose}</span>
-          <button onClick={handlePayLoan}>Pay loan</button>
-        </div>
+        {account?.loan > 0 ? (
+          <div>
+            <span>
+              Pay back ${account?.loan} {account?.loanPurpose}
+            </span>
+            <button onClick={handlePayLoan}>Pay loan</button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

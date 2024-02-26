@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deposit, withdraw } from "./accountSlice";
 
 function AccountOperations() {
   const [depositAmount, setDepositAmount] = useState("");
@@ -7,9 +9,28 @@ function AccountOperations() {
   const [loanPurpose, setLoanPurpose] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  function handleDeposit() {}
+  const account = useSelector((state) => state.account);
+  const dispatch = useDispatch();
 
-  function handleWithdrawal() {}
+  console.log(account);
+
+  function handleDeposit() {
+    if (!depositAmount) return;
+
+    dispatch(deposit(depositAmount));
+    setDepositAmount("");
+  }
+
+  function handleWithdrawal() {
+    if (!withdrawalAmount) return;
+
+    if (withdrawalAmount <= account.balance) {
+      dispatch(withdraw(withdrawalAmount));
+      setWithdrawalAmount("");
+    }else{
+      console.log('You have not enough balance');
+    }
+  }
 
   function handleRequestLoan() {}
 

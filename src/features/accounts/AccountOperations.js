@@ -12,10 +12,13 @@ function AccountOperations() {
   const account = useSelector((state) => state.account);
   const dispatch = useDispatch();
 
+  console.log(account);
+
   function handleDeposit() {
     if (!depositAmount) return;
 
-    dispatch(deposit(depositAmount, currency));
+    // dispatch(deposit(depositAmount, currency));
+    dispatch(deposit(depositAmount));
     setDepositAmount("");
     setCurrency("USD");
   }

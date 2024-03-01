@@ -17,22 +17,38 @@ const accountSlice = createSlice({
     withdraw(state, action) {
       state.balance -= action.payload;
     },
-    requestLoan(state, action) {
-      if (state.loan > 0) return;
+    // requestLoan(state, action) {
 
-      state.loan = action.payload.amount;
-      state.loanPurpose = action.payload.purpose;
-      state.balance = action.payload.amount + state.balance;
+    //   console.log(action);
+    //   if (state.loan > 0) return;
+
+    //   state.loan = action.payload.amount;
+    //   state.loanPurpose = action.payload.purpose;
+    //   state.balance = action.payload.amount + state.balance;
+    // },
+    requestLoan: {
+      prepare(amount, purpose) {
+        return {
+          payload: { amount, purpose },
+        };
+      },
+
+      reducer(state, action) {
+        if (state.loan > 0) return;
+        state.loan = action.payload.amount;
+        state.loanPurpose = action.payload.purpose;
+        state.balance = action.payload.amount + state.balance;
+      },
     },
     payLoan(state, action) {
-      state.loan = 0;
-      state.purpose = "";
       state.balance -= state.loan;
+      state.loan = 0;
+      state.loanPurpose = "";
     },
   },
 });
 
-export const {deposit,withdraw,requestLoan,payLoan} = accountSlice.actions;
+export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
 
 export default accountSlice.reducer;
 
